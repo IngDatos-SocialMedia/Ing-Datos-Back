@@ -64,14 +64,14 @@ def insert_data_to_db(data):
                 # Verificar si el registro ya existe en la tabla 'crypto_prices'
                 cursor.execute('''SELECT 1 FROM crypto_prices WHERE name = %s LIMIT 1;''', (entry['name'],))
                 if cursor.fetchone() is None:  # Si no existe, insertamos los nuevos datos
-                    cursor.execute('''
+                    cursor.execute(''' 
                         INSERT INTO crypto_prices (name, symbol, price, timestamp)
                         VALUES (%s, %s, %s, %s)
                     ''', (entry['name'], entry['symbol'], entry['price'], entry['timestamp']))
                     print(f"Datos insertados en crypto_prices: {entry['name']} a {entry['timestamp']}")
                 else:
                     # Si los datos existen, actualizamos la fila
-                    cursor.execute('''
+                    cursor.execute(''' 
                         UPDATE crypto_prices
                         SET price = %s, timestamp = %s
                         WHERE name = %s;
@@ -89,7 +89,7 @@ def insert_data_to_db(data):
             conn.close()  # Asegura el cierre de la conexión
 
 # Función principal para cargar los datos
-def load_data_to_db_coinmarketcap(file_path):
+def load_data_to_db_coinmarketcap2(file_path):
     print("Iniciando el proceso de carga de datos de CoinMarketCap...")
     data = load_data(file_path)
     if data:
@@ -101,4 +101,4 @@ def load_data_to_db_coinmarketcap(file_path):
 if __name__ == "__main__":
     file_path = "crypto_etl_project/data/coinmarketcap/coin_data_transformed.json"  # Archivo JSON con los datos transformados
     print(f"Intentando cargar los datos de CoinMarketCap desde {file_path}...")
-    load_data_to_db_coinmarketcap(file_path)
+    load_data_to_db_coinmarketcap2(file_path)
