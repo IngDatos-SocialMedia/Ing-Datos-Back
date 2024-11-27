@@ -1,0 +1,10 @@
+import sys
+import os
+
+# Añadir la carpeta raíz del proyecto al sys.path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'crypto_etl_project')))
+
+# Ahora puedes importar las carpetas dentro de `crypto_etl_project`
+from extraction.binance_extractor import fetch_and_save_data
+from cleaning.binance_cleaner import monitor_and_clean
+from loader.binance_loader import load_data_to_db

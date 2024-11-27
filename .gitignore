@@ -1,0 +1,9 @@
+
+# Ignorar todos los archivos .json
+*.json
+
+# También puedes ignorar archivos de logs
+*.log
+
+# Ignorar todos los archivos en un directorio
+__pycache__/
