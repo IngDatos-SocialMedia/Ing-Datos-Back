@@ -2,11 +2,11 @@
     "success": true,
     "terms": "https://coinlayer.com/terms",
     "privacy": "https://coinlayer.com/privacy",
-    "timestamp": 1732722727,
+    "timestamp": 1732730406,
     "target": "USD",
     "rates": {
-        "DASH": 37.1134,
-        "NEO": 14.187741,
+        "DASH": 37.7153,
+        "NEO": 14.220511,
         "STEEM": 0.190752,
         "ZEN": 13.98903
     }

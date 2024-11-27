@@ -4,7 +4,7 @@ import time
 import pandas as pd
 from datetime import datetime
 from sklearn.preprocessing import StandardScaler
-from scipy import stats
+from sklearn.impute import KNNImputer
 
 print("Iniciando transformación de datos de Binance...")
 
@@ -18,53 +18,41 @@ def load_data(file_path):
         print("Archivo vacío o no encontrado, devolviendo un DataFrame vacío.")
         return pd.DataFrame()
 
-# Función para limpiar los datos (eliminar outliers, normalización, etc.)
+# Función para limpiar los datos (eliminar NaN, normalización, etc.)
 def clean_data(data):
     print("Iniciando la limpieza de datos...")
-    
+
     # Convertir la columna 'price' a valores numéricos, forzando errores a NaN
     data['price'] = pd.to_numeric(data['price'], errors='coerce')
 
-    # Eliminar filas con NaN en la columna 'price'
+    # Usar KNN Imputer para rellenar valores nulos en 'price'
+    imputer = KNNImputer(n_neighbors=3)  # Usar los 3 vecinos más cercanos para la imputación
+    data['price'] = imputer.fit_transform(data[['price']])
+
+    # Eliminar filas con NaN en la columna 'price' si no se puede imputar
     data = data.dropna(subset=['price'])
-
-    # Eliminar outliers usando IQR (Inter-Quartile Range)
-    Q1 = data['price'].quantile(0.25)
-    Q3 = data['price'].quantile(0.75)
-    IQR = Q3 - Q1
-    print(f"Q1: {Q1}, Q3: {Q3}, IQR: {IQR}")
-
-    data = data[(data['price'] >= (Q1 - 1.5 * IQR)) & (data['price'] <= (Q3 + 1.5 * IQR))]
-    print(f"Datos después de la eliminación de outliers: {len(data)} registros restantes.")
 
     # Normalización de los precios (si es necesario)
     scaler = StandardScaler()
     data['price'] = scaler.fit_transform(data[['price']])
 
     # Conversión de timestamps a fechas legibles en formato string
-    data['timestamp'] = data['timestamp'].apply(lambda x: x.strftime('%Y-%m-%d %H:%M:%S') if isinstance(x, pd.Timestamp) else str(x))
-    
+    # Si el 'timestamp' está vacío o es nulo, reemplazarlo por la fecha y hora actual
+    data['timestamp'] = data['timestamp'].apply(
+        lambda x: datetime.now().strftime('%Y-%m-%d %H:%M:%S') if pd.isnull(x) else x
+    )
+
     print("Datos limpiados y transformados correctamente.")
     return data
 
-# Función para guardar los datos procesados en un archivo JSON (sin sobrescribir todo el archivo)
+# Función para guardar los datos procesados en un archivo JSON (sobrescribiendo el archivo)
 def save_to_json(data, file_path):
     print(f"Guardando datos en {file_path}...")
     os.makedirs(os.path.dirname(file_path), exist_ok=True)
 
-    # Si el archivo no existe o está vacío, inicializa la lista
-    if os.path.exists(file_path) and os.path.getsize(file_path) > 0:
-        with open(file_path, "r", encoding="utf-8") as f:
-            existing_data = json.load(f)
-    else:
-        existing_data = []
-
-    # Añadir solo los nuevos datos
-    existing_data.extend(data)
-
-    # Guardar los datos en el archivo JSON (sin sobrescribir todo)
+    # Sobrescribir el archivo con los nuevos datos
     with open(file_path, "w", encoding="utf-8") as f:
-        json.dump(existing_data, f, ensure_ascii=False, indent=4)
+        json.dump(data, f, ensure_ascii=False, indent=4)
     
     print(f"Datos guardados correctamente en {file_path}")
 
@@ -74,7 +62,7 @@ def monitor_and_clean(file_path, new_file_path, interval=30):
     count = 0
     while count < interval:
         print(f"Esperando {interval} segundos antes de la próxima verificación... {count + 1}/{interval}")
-        
+
         # Cargar los datos existentes
         data = load_data(file_path)
 

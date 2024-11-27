@@ -46,10 +46,10 @@ def fetch_and_save_coinlayer_data():
     else:
         print(f"Error al obtener los datos: {response.status_code}")
 
-def main():
+def layer():
     # Llamar a la función que obtiene y guarda los datos
     fetch_and_save_coinlayer_data()
 
 # Ejecutar el script
 if __name__ == "__main__":
-    main()
+    layer()

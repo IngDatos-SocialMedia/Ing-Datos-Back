@@ -1,21 +1,23 @@
 import time
 import threading
+#Binance
 from crypto_etl_project.src.extraction.binance_extractor import fetch_and_save_data
 from crypto_etl_project.src.cleaning.binance_cleaner import monitor_and_clean
 from crypto_etl_project.src.loader.binance_loader import load_data_to_db
 
 
+
 #Extractores
 from crypto_etl_project.src.extraction.coinmarketcap_extractor import fetch_and_save_data_coinmarketcap
-##CRYTOCOMPARE
-from crypto_etl_project.src.extraction.coinlayer_extractor import main
+from crypto_etl_project.src.extraction.coinlayer_extractor import layer
 from crypto_etl_project.src.extraction.geckocoin_extractor import fetch_and_save_data_coingecko
 
 #Transformadores
 from crypto_etl_project.src.cleaning.coinmarketcap_cleaner import transform_and_save_data
 from crypto_etl_project.src.cleaning.coinlayer_cleaner import process_and_save_coinlayer_data
-from crypto_etl_project.src.cleaning.crypto_cleaner import process_and_save_cryptocompare_data
-from crypto_etl_project.src.cleaning.geckocoin_cleaner import process_and_save_geckocoin_data
+from crypto_etl_project.src.cleaning.crypto_cleaner import fetch_and_save_crypto_prices #
+from crypto_etl_project.src.cleaning.geckocoin_cleaner import fetch_and_map_gecko_data #
+
 
 #Loaders
 from crypto_etl_project.src.loader.coinmarketcap_loader import load_data_to_db_coinmarketcap
@@ -83,6 +85,14 @@ def load_data_coinmarketcap():
 def main():
     global running
     
+    print('Iniciando proceso ETL...')
+    print('Extracción de datos')
+    fetch_and_save_data_coinmarketcap()
+    transform_and_save_data()
+    layer()
+    process_and_save_coinlayer_data()
+    fetch_and_save_crypto_prices()
+    fetch_and_map_gecko_data
     #GenerarDataSet
     print("Generación de data set")
     load_and_combine_data()

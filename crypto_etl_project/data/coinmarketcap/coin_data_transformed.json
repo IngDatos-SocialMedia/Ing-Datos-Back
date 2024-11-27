@@ -2,31 +2,31 @@
     {
         "name": "BITCOIN",
         "symbol": "BTCUSDT",
-        "price": 89948.49895673996,
-        "timestamp": 1732720200
+        "price": 90664.21473328455,
+        "timestamp": 1732728600
     },
     {
         "name": "ETHEREUM",
         "symbol": "ETHUSDT",
-        "price": 3345.255267523886,
-        "timestamp": 1732720260
+        "price": 3363.1880715298444,
+        "timestamp": 1732728660
     },
     {
         "name": "SOLANA",
         "symbol": "SOLUSDT",
-        "price": 226.7796916951879,
-        "timestamp": 1732720260
+        "price": 225.8480555267097,
+        "timestamp": 1732728660
     },
     {
         "name": "BNB",
         "symbol": "BNBUSDT",
-        "price": 600.1985015701604,
-        "timestamp": 1732720260
+        "price": 601.6467909282462,
+        "timestamp": 1732728660
     },
     {
         "name": "CARDANO",
         "symbol": "ADAUSDT",
-        "price": 0.9524595553368197,
-        "timestamp": 1732720260
+        "price": 0.9598417925247378,
+        "timestamp": 1732728660
     }
 ]

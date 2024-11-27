@@ -31,33 +31,26 @@ def get_crypto_price(symbol="BTCUSDT"):
         print(f"Error al obtener los datos para {symbol}: {e}")
         return None
 
-# Función para guardar los datos en un archivo JSON
+# Función para guardar los datos en un archivo JSON (sobrescribiendo el archivo)
 def save_to_json(data, file_path):
     try:
         os.makedirs(os.path.dirname(file_path), exist_ok=True)
 
-        # Cargar los datos existentes
-        if os.path.exists(file_path):
-            with open(file_path, "r", encoding="utf-8") as f:
-                existing_data = json.load(f)
-        else:
-            existing_data = []
-
-        # Agregar los nuevos datos
-        existing_data.append(data)
-
-        # Guardar los datos en el archivo JSON
+        # Sobrescribir el archivo con todos los datos acumulados
         with open(file_path, "w", encoding="utf-8") as f:
-            json.dump(existing_data, f, ensure_ascii=False, indent=4)
+            json.dump(data, f, ensure_ascii=False, indent=4)  # Sobrescribir con la lista de datos acumulados
         print(f"Datos guardados en {file_path}")
     except Exception as e:
         print(f"Error al guardar los datos en {file_path}: {e}")
 
 # Función para realizar la extracción cada 1 minuto para múltiples criptomonedas
 def fetch_and_save_data():
-    symbols = ["STEEMUSDT", "ZENUSDT", "NEOUSDT", "DASHUSDT"]
+    symbols = ["ARUSDT", "XTZUSDT", "STRKUSDT", "EOSUSDT", "DASHUSDT", "NEOUSDT", "STEEMUSDT", "ZENUSDT", "PEPEUSDT", "TRXUSDT", "XRPUSDT", "THEUSDT", "USDTUSDT", "DOGEUSDT"]
 
     output_file = "crypto_etl_project/data/binance/binance_data.json"  # El archivo donde se guardarán los datos
+
+    # Crear una lista para almacenar los datos
+    data_list = []
 
     while True:
         for symbol in symbols:
@@ -65,13 +58,20 @@ def fetch_and_save_data():
             data = get_crypto_price(symbol)
             if data:
                 print(f"Datos obtenidos: {data}")
+                
+                # Agregar los datos a la lista
+                data_list.append(data)
 
-                # Guardar los datos en el archivo JSON
-                save_to_json(data, output_file)
+        # Guardar los datos de todas las criptomonedas en el archivo JSON (sobrescribir todo el archivo)
+        if data_list:
+            save_to_json(data_list, output_file)
+        
+        # Limpiar la lista de datos después de guardarlos
+        data_list.clear()
 
         # Esperar hasta el próximo ciclo de consulta (1 minuto)
         print(f"Esperando 1 minuto para la siguiente consulta...")
-        time.sleep(30)  # Esperar 1 minuto (60 segundos)
+        time.sleep(5)  # Esperar 5seg 
 
 if __name__ == "__main__":
     fetch_and_save_data()

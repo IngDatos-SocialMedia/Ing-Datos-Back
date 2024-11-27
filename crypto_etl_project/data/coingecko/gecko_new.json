@@ -2,25 +2,25 @@
     {
         "name": "AR",
         "symbol": "ARUSDT",
-        "price": 20.67,
-        "timestamp": "2024-11-27T16:59:51.525Z"
+        "price": 20.84,
+        "timestamp": "2024-11-27T17:49:43.255Z"
     },
     {
         "name": "XTZ",
         "symbol": "XTZUSDT",
-        "price": 1.27,
-        "timestamp": "2024-11-27T16:59:53.672Z"
+        "price": 1.28,
+        "timestamp": "2024-11-27T17:49:43.364Z"
     },
     {
         "name": "STRK",
         "symbol": "STRKUSDT",
-        "price": 0.608374,
-        "timestamp": "2024-11-27T16:59:52.630Z"
+        "price": 0.617505,
+        "timestamp": "2024-11-27T17:49:42.062Z"
     },
     {
         "name": "EOS",
         "symbol": "EOSUSDT",
-        "price": 0.812598,
-        "timestamp": "2024-11-27T16:59:58.270Z"
+        "price": 0.819358,
+        "timestamp": "2024-11-27T17:49:47.652Z"
     }
 ]
