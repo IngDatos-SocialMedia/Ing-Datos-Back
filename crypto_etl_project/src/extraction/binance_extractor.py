@@ -55,7 +55,7 @@ def save_to_json(data, file_path):
 
 # Función para realizar la extracción cada 1 minuto para múltiples criptomonedas
 def fetch_and_save_data():
-    symbols = ["BTCUSDT", "ETHUSDT", "LTCUSDT", "BNBUSDT", "ADAUSDT", "SOLUSDT"]
+    symbols = ["ARUSDT", "XTZUSDT", "STRKUSDT", "EOSUSDT"]
 
     output_file = "crypto_etl_project/data/binance/binance_data.json"  # El archivo donde se guardarán los datos
 
@@ -71,7 +71,7 @@ def fetch_and_save_data():
 
         # Esperar hasta el próximo ciclo de consulta (1 minuto)
         print(f"Esperando 1 minuto para la siguiente consulta...")
-        time.sleep(60)  # Esperar 1 minuto (60 segundos)
+        time.sleep(30)  # Esperar 1 minuto (60 segundos)
 
 if __name__ == "__main__":
     fetch_and_save_data()
