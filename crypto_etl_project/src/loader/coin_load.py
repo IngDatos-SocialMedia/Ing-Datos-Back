@@ -1,20 +1,20 @@
 import os
 import json
+import pandas as pd
 import psycopg2  # Para conectar con PostgreSQL
 
 print("Iniciando subida de datos de CoinMarketCap...")
 
-# Función para cargar datos desde un archivo JSON
-def load_data(file_path):
+# Función para cargar datos desde un archivo CSV
+def load_data_from_csv(file_path):
     print(f"Intentando cargar los datos desde {file_path}...")
     if os.path.exists(file_path):
-        with open(file_path, "r", encoding="utf-8") as f:
-            data = json.load(f)
-            print(f"Datos cargados: {len(data)} registros encontrados.")
-            return data
+        data = pd.read_csv(file_path)
+        print(f"Datos cargados: {len(data)} registros encontrados.")
+        return data
     else:
         print(f"El archivo {file_path} no existe.")
-        return []
+        return pd.DataFrame()  # Devuelve un DataFrame vacío si no se encuentra el archivo
 
 # Función para conectar con PostgreSQL
 def connect_to_db():
@@ -58,7 +58,7 @@ def insert_data_to_db(data):
             create_table_if_not_exists(cursor)
 
             # Insertar los datos en la tabla 'crypto_prices'
-            for entry in data:
+            for index, entry in data.iterrows():
                 print(f"Procesando {entry['name']} con timestamp {entry['timestamp']}...")
 
                 # Verificar si el registro ya existe en la tabla 'crypto_prices'
@@ -88,17 +88,20 @@ def insert_data_to_db(data):
             cursor.close()
             conn.close()  # Asegura el cierre de la conexión
 
-# Función principal para cargar los datos
-def load_data_to_db_coinmarketcap2(file_path):
-    print("Iniciando el proceso de carga de datos de CoinMarketCap...")
-    data = load_data(file_path)
-    if data:
+# Función principal para cargar los datos y subirlos a la base de datos
+def load_data_to_db_coinmarketcap2():
+    file_path = "combined_data.csv"  # Archivo CSV con los datos transformados
+    print(f"Intentando cargar los datos de CoinMarketCap desde {file_path}...")
+    
+    # Cargar datos desde el archivo CSV
+    data = load_data_from_csv(file_path)
+    
+    # Si hay datos, realizar la inserción en la base de datos
+    if not data.empty:
         insert_data_to_db(data)
     else:
         print("No hay datos para cargar.")
 
 # Ejecutar función principal
 if __name__ == "__main__":
-    file_path = "crypto_etl_project/data/coinmarketcap/coin_data_transformed.json"  # Archivo JSON con los datos transformados
-    print(f"Intentando cargar los datos de CoinMarketCap desde {file_path}...")
-    load_data_to_db_coinmarketcap2(file_path)
+    load_data_to_db_coinmarketcap2()

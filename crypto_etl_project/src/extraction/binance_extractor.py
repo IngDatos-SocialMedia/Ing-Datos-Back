@@ -55,7 +55,7 @@ def save_to_json(data, file_path):
 
 # Función para realizar la extracción cada 1 minuto para múltiples criptomonedas
 def fetch_and_save_data():
-    symbols = ["ARUSDT", "XTZUSDT", "STRKUSDT", "EOSUSDT"]
+    symbols = ["STEEMUSDT", "ZENUSDT", "NEOUSDT", "DASHUSDT"]
 
     output_file = "crypto_etl_project/data/binance/binance_data.json"  # El archivo donde se guardarán los datos
 
