@@ -2,12 +2,13 @@ import requests
 import json
 import os
 
+# Función principal que realiza la consulta y guarda los datos
 def fetch_and_save_data_coingecko():
     # URL de la API de CoinGecko
     url = "https://api.coingecko.com/api/v3/coins/markets"
 
-    # Criptomonedas a consultar (Arweave, Tezos, Starknet, EOS)
-    symbols = ['arweave', 'tezos', 'starknet', 'eos']  # Lista de monedas a consultar
+    # Criptomonedas a consultar (puedes modificar esta lista según lo necesites)
+    symbols = ['arweave', 'tezos', 'starknet', 'eos']
 
     # Parámetros de la consulta
     params = {
@@ -56,6 +57,9 @@ def fetch_and_save_data_coingecko():
     else:
         print(f"Error al obtener los datos: {response.status_code}")
 
-# Llamar a la función
+
+    
+
+# Llamar a la función main cuando se ejecute el script
 if __name__ == "__main__":
     fetch_and_save_data_coingecko()

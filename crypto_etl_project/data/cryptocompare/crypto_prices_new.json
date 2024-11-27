@@ -1,0 +1,38 @@
+[
+    {
+        "name": "PEPE",
+        "symbol": "PEPEUSDT",
+        "price": 1.931535836757213e-05,
+        "timestamp": "2024-11-27T16:52:08"
+    },
+    {
+        "name": "TRX",
+        "symbol": "TRXUSDT",
+        "price": 0.2004176976768,
+        "timestamp": "2024-11-27T16:52:17"
+    },
+    {
+        "name": "XRP",
+        "symbol": "XRPUSDT",
+        "price": 1.47548639270149,
+        "timestamp": "2024-11-27T16:52:19"
+    },
+    {
+        "name": "THE",
+        "symbol": "THEUSDT",
+        "price": 3.827206641410931,
+        "timestamp": "2024-11-27T16:52:30"
+    },
+    {
+        "name": "T",
+        "symbol": "USDTUSDT",
+        "price": 1.00079786036983,
+        "timestamp": "2024-11-27T16:52:35"
+    },
+    {
+        "name": "DOGE",
+        "symbol": "DOGEUSDT",
+        "price": 0.399285811654336,
+        "timestamp": "2024-11-27T16:52:32"
+    }
+]

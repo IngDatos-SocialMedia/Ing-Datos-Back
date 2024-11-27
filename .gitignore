@@ -1,6 +1,6 @@
 
 # Ignorar todos los archivos .json
-*.json
+
 
 # También puedes ignorar archivos de logs
 *.log

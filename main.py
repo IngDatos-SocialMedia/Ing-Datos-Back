@@ -3,10 +3,29 @@ import threading
 from crypto_etl_project.src.extraction.binance_extractor import fetch_and_save_data
 from crypto_etl_project.src.cleaning.binance_cleaner import monitor_and_clean
 from crypto_etl_project.src.loader.binance_loader import load_data_to_db
+
+
+#Extractores
 from crypto_etl_project.src.extraction.coinmarketcap_extractor import fetch_and_save_data_coinmarketcap
-from crypto_etl_project.src.cleaning.coinmarketcap_cleaner import monitor_and_clean_coinmarketcap
+##CRYTOCOMPARE
+from crypto_etl_project.src.extraction.coinlayer_extractor import main
+from crypto_etl_project.src.extraction.geckocoin_extractor import fetch_and_save_data_coingecko
+
+#Transformadores
+from crypto_etl_project.src.cleaning.coinmarketcap_cleaner import transform_and_save_data
+from crypto_etl_project.src.cleaning.coinlayer_cleaner import process_and_save_coinlayer_data
+from crypto_etl_project.src.cleaning.crypto_cleaner import process_and_save_cryptocompare_data
+from crypto_etl_project.src.cleaning.geckocoin_cleaner import process_and_save_geckocoin_data
+
+#Loaders
 from crypto_etl_project.src.loader.coinmarketcap_loader import load_data_to_db_coinmarketcap
+
+#Dataset
+from crypto_etl_project.src.loader.joinLoads_loader import load_and_combine_data
+
+#Carga de BD
 from crypto_etl_project.src.loader.coin_load import load_data_to_db_coinmarketcap2
+
 
 # Flag global para controlar la ejecución
 running = True
@@ -50,7 +69,7 @@ def transform_data_coinmarketcap():
     print("Iniciando el proceso de limpieza de datos de CoinMarketCap...")
     file_path = "crypto_etl_project/data/coinmarketcap/coin_data.json"  # El archivo donde se guardan los datos extraídos
     new_file_path = "crypto_etl_project/data/coinmarketcap/coin_data_transformed.json"  # El archivo donde se guardan los datos transformados
-    monitor_and_clean_coinmarketcap(file_path, new_file_path)  # Ejecutar la transformación de CoinMarketCap una vez
+    transform_and_save_data(file_path, new_file_path)  # Ejecutar la transformación de CoinMarketCap una vez
     print("Transformación de CoinMarketCap completada.")
 
 # Función para la carga de datos en la base de datos de CoinMarketCap (solo una vez al inicio)
@@ -63,18 +82,13 @@ def load_data_coinmarketcap():
 # Función principal para orquestar el flujo ETL con hilos
 def main():
     global running
-    load_data_to_db_coinmarketcap2(file_path2)
-
-    # Esperar 10 segundos al iniciar el programa
-    print("Esperando 5 segundos antes de comenzar el proceso...")
-
-    # Ejecutar las funciones de CoinMarketCap solo una vez
-    extract_data_coinmarketcap()
-    transform_data_coinmarketcap()
-    time.sleep(5)
-    print("Carga de 2 completada.")
-
-    time.sleep(5)
+    
+    #GenerarDataSet
+    print("Generación de data set")
+    load_and_combine_data()
+    print("Carga de datos")
+    load_data_to_db_coinmarketcap2()
+    
 
     # Crear hilos para las tareas de Binance
     extract_thread_binance = threading.Thread(target=extract_data_binance)

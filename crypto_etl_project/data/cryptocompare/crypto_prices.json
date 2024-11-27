@@ -1,0 +1,32 @@
+[
+    {
+        "symbol_pair": "PEPEUSD",
+        "price": 1.931535836757213e-05,
+        "timestamp": "2024-11-27T16:52:08"
+    },
+    {
+        "symbol_pair": "TRXUSD",
+        "price": 0.2004176976768,
+        "timestamp": "2024-11-27T16:52:17"
+    },
+    {
+        "symbol_pair": "XRPUSD",
+        "price": 1.47548639270149,
+        "timestamp": "2024-11-27T16:52:19"
+    },
+    {
+        "symbol_pair": "THEUSD",
+        "price": 3.827206641410931,
+        "timestamp": "2024-11-27T16:52:30"
+    },
+    {
+        "symbol_pair": "USDTUSD",
+        "price": 1.00079786036983,
+        "timestamp": "2024-11-27T16:52:35"
+    },
+    {
+        "symbol_pair": "DOGEUSD",
+        "price": 0.399285811654336,
+        "timestamp": "2024-11-27T16:52:32"
+    }
+]

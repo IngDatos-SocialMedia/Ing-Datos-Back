@@ -1,0 +1,32 @@
+[
+    {
+        "name": "Bitcoin",
+        "symbol": "BTC",
+        "price": 90664.21473328455,
+        "timestamp": "2024-11-27T17:30:00.000Z"
+    },
+    {
+        "name": "Ethereum",
+        "symbol": "ETH",
+        "price": 3363.1880715298444,
+        "timestamp": "2024-11-27T17:31:00.000Z"
+    },
+    {
+        "name": "Solana",
+        "symbol": "SOL",
+        "price": 225.8480555267097,
+        "timestamp": "2024-11-27T17:31:00.000Z"
+    },
+    {
+        "name": "BNB",
+        "symbol": "BNB",
+        "price": 601.6467909282462,
+        "timestamp": "2024-11-27T17:31:00.000Z"
+    },
+    {
+        "name": "Cardano",
+        "symbol": "ADA",
+        "price": 0.9598417925247378,
+        "timestamp": "2024-11-27T17:31:00.000Z"
+    }
+]

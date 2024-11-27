@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Arweave",
+        "symbol": "ar",
+        "price": 20.46,
+        "timestamp": "2024-11-27T15:28:00.287Z"
+    },
+    {
+        "name": "Tezos",
+        "symbol": "xtz",
+        "price": 1.27,
+        "timestamp": "2024-11-27T15:27:51.505Z"
+    },
+    {
+        "name": "Starknet",
+        "symbol": "strk",
+        "price": 0.602526,
+        "timestamp": "2024-11-27T15:28:00.640Z"
+    },
+    {
+        "name": "EOS",
+        "symbol": "eos",
+        "price": 0.804292,
+        "timestamp": "2024-11-27T15:27:54.843Z"
+    }
+]
