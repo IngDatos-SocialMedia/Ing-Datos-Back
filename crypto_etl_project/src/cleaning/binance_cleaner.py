@@ -5,9 +5,13 @@ import pandas as pd
 from datetime import datetime
 from sklearn.preprocessing import StandardScaler
 from sklearn.impute import KNNImputer
-
+from sklearn.linear_model import SGDRegressor
+import joblib
 
 print("Iniciando transformación de datos de Binance...")
+
+# Inicializar el modelo de regresión (modelo incremental)
+model = SGDRegressor()
 
 # Función para cargar los datos existentes desde el archivo JSON
 def load_data(file_path):
@@ -57,9 +61,51 @@ def save_to_json(data, file_path):
     
     print(f"Datos guardados correctamente en {file_path}")
 
+# Función para acumular los datos de entrenamiento en el archivo JSON
+def accumulate_data_for_ml(new_data, ml_file_path):
+    # Verificar si el archivo de datos ML existe y si está vacío
+    if os.path.exists(ml_file_path):
+        try:
+            # Si el archivo no está vacío, cargar los datos históricos
+            with open(ml_file_path, "r", encoding="utf-8") as f:
+                historical_data = json.load(f)
+        except json.JSONDecodeError:
+            # Si hay un error en el archivo (vacío o corrupto), inicializar los datos históricos como una lista vacía
+            print(f"El archivo {ml_file_path} está vacío o tiene un formato incorrecto. Inicializando datos.")
+            historical_data = []
+    else:
+        # Si el archivo no existe, inicializarlo con una lista vacía
+        print(f"El archivo {ml_file_path} no existe. Creando un nuevo archivo.")
+        historical_data = []
+
+    # Acumular los nuevos datos al conjunto histórico
+    historical_data.extend(new_data)
+
+    # Guardar los datos acumulados nuevamente en el archivo JSON
+    with open(ml_file_path, "w", encoding="utf-8") as f:
+        json.dump(historical_data, f, ensure_ascii=False, indent=4)
+
+    print(f"Datos acumulados y guardados en {ml_file_path}")
+
+
+# Función para actualizar el modelo de manera incremental
+def update_model(data):
+    global model
+    # Características (en este caso, solo el precio)
+    X_new = data[['price']]
+    # Valor objetivo (puede ser cualquier otra variable, en este caso tomamos el precio como objetivo)
+    y_new = data['price']
+
+    # Entrenamiento incremental del modelo
+    model.partial_fit(X_new, y_new)
+    print("Modelo actualizado con nuevos datos.")
+
+    # Guardar el modelo actualizado en disco
+    joblib.dump(model, 'incremental_model.pkl')
+    print("Modelo guardado en disco.")
 
 # Función para monitorear el archivo JSON y limpiar los nuevos datos
-def monitor_and_clean(file_path, new_file_path, interval=1):
+def monitor_and_clean(file_path, new_file_path, ml_file_path, interval=1):
     print(f"Comenzando a monitorear el archivo de datos...")
 
     # Obtener el tiempo de la última modificación del archivo
@@ -78,11 +124,19 @@ def monitor_and_clean(file_path, new_file_path, interval=1):
             # Si hay datos, limpiarlos y procesarlos
             if not data.empty:
                 print("Datos encontrados, limpiando y procesando...")
+
+                # Limpiar los datos
                 cleaned_data = clean_data(data)
 
-                # Guardar los datos limpiados en un archivo nuevo sin sobrescribir todo
+                # Actualizar el modelo con los datos procesados
+                update_model(cleaned_data)
+
+                # Guardar los datos limpiados en un archivo nuevo para visualización
                 save_to_json(cleaned_data.to_dict(orient='records'), new_file_path)
                 print(f"Datos limpiados y guardados en {new_file_path}")
+
+                # Acumular los datos para el modelo ML (acumulando en el archivo de datos históricos)
+                accumulate_data_for_ml(cleaned_data.to_dict(orient='records'), ml_file_path)
 
             # Actualizar el tiempo de la última modificación
             last_modified_time = current_modified_time
@@ -94,6 +148,7 @@ def monitor_and_clean(file_path, new_file_path, interval=1):
 if __name__ == "__main__":
     file_path = "crypto_etl_project/data/binance/binance_data.json"  # Archivo original donde se guardan los datos extraídos
     new_file_path = "crypto_etl_project/data/binance/binance_data_new.json"  # Archivo donde se guardan los datos limpiados y procesados
+    ml_file_path = "crypto_etl_project/data/binance/binance_data_new_ML.json"  # Archivo donde se acumulan los datos para entrenamiento
 
     # Monitorear el archivo y limpiar los datos
-    monitor_and_clean(file_path, new_file_path)
+    monitor_and_clean(file_path, new_file_path, ml_file_path)

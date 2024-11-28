@@ -2,25 +2,25 @@
     {
         "name": "DASH",
         "symbol": "DASHUSDT",
-        "price": 36.181967,
-        "timestamp": 1732791965
+        "price": 36.303767,
+        "timestamp": 1732804625
     },
     {
         "name": "NEO",
         "symbol": "NEOUSDT",
-        "price": 14.855212,
-        "timestamp": 1732791965
+        "price": 14.815454,
+        "timestamp": 1732804625
     },
     {
         "name": "STEEM",
         "symbol": "STEEMUSDT",
         "price": 0.190752,
-        "timestamp": 1732791965
+        "timestamp": 1732804625
     },
     {
         "name": "ZEN",
         "symbol": "ZENUSDT",
         "price": 16.16923,
-        "timestamp": 1732791965
+        "timestamp": 1732804625
     }
 ]

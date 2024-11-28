@@ -11,7 +11,7 @@ def load_data(file_path):
             return data
     return []
 
-# Función para conectar con PostgreSQL
+# Función para conectarse a la base de datos PostgreSQL
 def connect_to_db():
     try:
         conn = psycopg2.connect(
@@ -26,35 +26,72 @@ def connect_to_db():
         print(f"Error de conexión: {e}")
         return None
 
-# Función para crear la tabla si no existe
-def create_table_if_not_exists(cursor):
+# Función para crear la tabla `coste` si no existe
+def create_coste_table(cursor):
     cursor.execute(''' 
-        CREATE TABLE IF NOT EXISTS crypto_data (
+        CREATE TABLE IF NOT EXISTS coste (
             symbol TEXT,
-            price REAL,
-            timestamp TEXT,
-            PRIMARY KEY (symbol, timestamp)
+            variacion REAL,
+            base REAL,
+            name TEXT,
+            precio REAL,
+            hora_variacion TEXT,
+            hora_base TEXT,
+            PRIMARY KEY (symbol, hora_variacion)
         )
     ''')
 
-# Función para eliminar los datos antiguos de la tabla
-def delete_old_data(cursor):
-    cursor.execute('DELETE FROM public.crypto_data;')
+# Función para insertar los datos en la tabla `coste` solo si los `symbol` coinciden
+def insert_into_coste(cursor):
+    # Consultar los datos de `crypto_data`
+    cursor.execute('SELECT symbol, price AS variacion, timestamp AS hora_variacion FROM crypto_data;')
+    crypto_data = cursor.fetchall()
 
-# Función para insertar o actualizar los datos en PostgreSQL
+    # Consultar los datos de `crypto_prices`
+    cursor.execute('SELECT symbol, price AS base, name, timestamp AS hora_base FROM crypto_prices;')
+    crypto_prices = cursor.fetchall()
+
+    # Iterar sobre cada `symbol` en `crypto_data`
+    for c_data in crypto_data:
+        for p_data in crypto_prices:
+            # Verificar si los `symbol` coinciden
+            if c_data[0] == p_data[0]:
+                # Calcular el precio (diferencia entre base y variación)
+                precio = p_data[1] - c_data[1]
+
+                # Insertar los datos en la tabla `coste`
+                cursor.execute('''
+                    INSERT INTO coste (symbol, variacion, base, name, precio, hora_variacion, hora_base)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s)
+                    ON CONFLICT (symbol, hora_variacion)
+                    DO UPDATE SET 
+                        variacion = EXCLUDED.variacion,
+                        base = EXCLUDED.base,
+                        name = EXCLUDED.name,
+                        precio = EXCLUDED.precio,
+                        hora_base = EXCLUDED.hora_base;
+                ''', (c_data[0], c_data[1], p_data[1], p_data[2], precio, c_data[2], p_data[3]))
+
+# Función para actualizar los datos en la tabla `crypto_data`
 def update_data_to_db(data):
     conn = connect_to_db()
     if conn:
         try:
             cursor = conn.cursor()
+            # Crear la tabla `crypto_data` si no existe
+            cursor.execute(''' 
+                CREATE TABLE IF NOT EXISTS crypto_data (
+                    symbol TEXT,
+                    price REAL,
+                    timestamp TEXT,
+                    PRIMARY KEY (symbol, timestamp)
+                );
+            ''')
 
-            # Crear la tabla si no existe
-            create_table_if_not_exists(cursor)
+            # Eliminar los datos antiguos de la tabla `crypto_data`
+            cursor.execute('DELETE FROM public.crypto_data;')
 
-            # Eliminar los datos antiguos
-            delete_old_data(cursor)
-
-            # Insertar los nuevos datos
+            # Insertar los nuevos datos en `crypto_data`
             for entry in data:
                 cursor.execute(''' 
                     INSERT INTO crypto_data (symbol, price, timestamp)
@@ -76,11 +113,32 @@ def monitor_and_update_load(file_path):
     while True:
         current_mod_time = os.path.getmtime(file_path)
         if current_mod_time != last_mod_time:
+            # Cargar los datos del archivo y actualizar la tabla `crypto_data`
             data = load_data(file_path)
             if data:
                 update_data_to_db(data)
                 print("Se ha detectado un cambio, actualización en la base de datos.")
-                last_mod_time = current_mod_time  # Actualizar el tiempo de la última modificación
+            
+            # Conectarse nuevamente a la base de datos y crear la tabla `coste` y actualizarla
+            conn = connect_to_db()
+            if conn:
+                try:
+                    cursor = conn.cursor()
+                    # Crear la tabla `coste` si no existe
+                    create_coste_table(cursor)
+                    # Insertar los datos en la tabla `coste`
+                    insert_into_coste(cursor)
+                    # Confirmar cambios
+                    conn.commit()
+                except Exception as e:
+                    print(f"Error al actualizar la tabla coste: {e}")
+                finally:
+                    cursor.close()
+                    conn.close()
+
+            # Actualizar el tiempo de la última modificación
+            last_mod_time = current_mod_time
+
         time.sleep(1)  # Esperar 1 segundo antes de comprobar nuevamente el archivo
 
 # Ejecutar la función de monitoreo

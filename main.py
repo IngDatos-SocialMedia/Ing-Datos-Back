@@ -23,7 +23,6 @@ from crypto_etl_project.src.loader.joinLoads_loader import load_and_combine_data
 
 # Carga de BD
 from crypto_etl_project.src.loader.coin_load import load_data_to_db_coinmarketcap2
-
 # Flag global para controlar la ejecución
 running = True
 file_path2 = "crypto_etl_project/data/coinmarketcap/coin_data_transformed.json"  # Archivo JSON con los datos transformados
@@ -42,8 +41,10 @@ def transform_data_binance():
     print("Iniciando el proceso de limpieza de datos de Binance...")
     file_path = "crypto_etl_project/data/binance/binance_data.json"  # El archivo donde se guardan los datos extraídos
     new_file_path = "crypto_etl_project/data/binance/binance_data_new.json"  # El archivo donde se guardan los datos limpiados
+    ml_file_path = "crypto_etl_project/data/binance/binance_data_new_ML.json"  # El archivo donde se acumulan los datos para entrenamiento
+
     while running:
-        monitor_and_clean(file_path, new_file_path, interval=1)  # Monitorear cada segundo
+        monitor_and_clean(file_path, new_file_path, ml_file_path, interval=1)  # Monitorear cada segundo
         time.sleep(1)  # Espera 1 segundo antes de la siguiente transformación
 
 # Función para la carga de datos en la base de datos de Binance
@@ -80,21 +81,26 @@ def load_data_coinmarketcap():
 def main():
     global running
     
-    print('Iniciando proceso ETL...')
-    print('Extracción de datos')
-    fetch_and_save_data_coinmarketcap()
-    transform_and_save_data()
-    layer()
-    process_and_save_coinlayer_data()
-    fetch_and_save_crypto_prices()
-    fetch_and_map_gecko_data()
+    #ACTUALIZACION DE PRECIOS BASES////////////////
     
-    # Generar Dataset
+    #print('Iniciando proceso ETL...')
+    #print('Extracción de datos')
+    #fetch_and_save_data_coinmarketcap()
+    #transform_and_save_data()
+    #layer()
+    #process_and_save_coinlayer_data()
+    #fetch_and_save_crypto_prices()
+    #fetch_and_map_gecko_data()
+    
+    # Generar Dataset//////////////////////////////
+
     print("Generación de data set")
     load_and_combine_data()
     print("Carga de datos")
     load_data_to_db_coinmarketcap2()
 
+
+    #SUBIDA DE DATOS VARIACIONES
     # Crear hilos para las tareas de Binance
     extract_thread_binance = threading.Thread(target=extract_data_binance)
     transform_thread_binance = threading.Thread(target=transform_data_binance)

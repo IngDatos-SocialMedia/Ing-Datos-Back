@@ -3,3 +3,7 @@ pandas==1.5.3
 scikit-learn==1.2.0
 python-dotenv==0.21.0
 binance==1.0.15
+pandas
+matplotlib
+seaborn
+scikit-learn
