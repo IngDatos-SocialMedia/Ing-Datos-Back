@@ -2,6 +2,7 @@ import os
 import json
 import psycopg2
 import time
+import pandas as pd
 
 # Función para cargar datos desde un archivo JSON
 def load_data(file_path):
@@ -71,6 +72,32 @@ def insert_into_coste(cursor):
                         precio = EXCLUDED.precio,
                         hora_base = EXCLUDED.hora_base;
                 ''', (c_data[0], c_data[1], p_data[1], p_data[2], precio, c_data[2], p_data[3]))
+
+    # Exportar los datos de la tabla coste a un archivo JSON y CSV
+    export_data_to_file()
+
+# Función para exportar los datos de la tabla `coste` a un archivo JSON y CSV
+def export_data_to_file():
+    conn = connect_to_db()
+    if conn:
+        try:
+            # Consultar los datos de la tabla `coste`
+            query = "SELECT * FROM coste;"
+            df = pd.read_sql(query, conn)  # Usamos pandas para leer directamente desde SQL
+            
+            # Guardar los datos en un archivo JSON
+            json_file_path = r"C:\Users\dylan\Desktop\Bit\Proyecto\dataset\dataset.json"
+            df.to_json(json_file_path, orient="records", lines=True)
+            print(f"Datos exportados correctamente a {json_file_path}")
+            
+            # Alternativamente, guardar como CSV
+            csv_file_path = r"C:\Users\dylan\Desktop\Bit\Proyecto\dataset\dataset.csv"
+            df.to_csv(csv_file_path, index=False)
+            print(f"Datos exportados correctamente a {csv_file_path}")
+        except Exception as e:
+            print(f"Error al exportar los datos: {e}")
+        finally:
+            conn.close()
 
 # Función para actualizar los datos en la tabla `crypto_data`
 def update_data_to_db(data):

@@ -1,102 +1,102 @@
 [
     {
         "symbol": "ARUSDT",
-        "price": "20.80000000",
-        "timestamp": "2024-11-28 12:21:37"
+        "price": "21.47000000",
+        "timestamp": "2024-11-28 14:50:10"
     },
     {
         "symbol": "XTZUSDT",
-        "price": "1.27000000",
-        "timestamp": "2024-11-28 12:21:37"
+        "price": "1.28300000",
+        "timestamp": "2024-11-28 14:50:11"
     },
     {
         "symbol": "STRKUSDT",
-        "price": "0.61330000",
-        "timestamp": "2024-11-28 12:21:37"
+        "price": "0.62390000",
+        "timestamp": "2024-11-28 14:50:11"
     },
     {
         "symbol": "EOSUSDT",
-        "price": "0.80040000",
-        "timestamp": "2024-11-28 12:21:38"
+        "price": "0.80300000",
+        "timestamp": "2024-11-28 14:50:11"
     },
     {
         "symbol": "DASHUSDT",
-        "price": "36.43000000",
-        "timestamp": "2024-11-28 12:21:38"
+        "price": "36.67000000",
+        "timestamp": "2024-11-28 14:50:12"
     },
     {
         "symbol": "NEOUSDT",
-        "price": "14.55000000",
-        "timestamp": "2024-11-28 12:21:38"
+        "price": "14.72000000",
+        "timestamp": "2024-11-28 14:50:12"
     },
     {
         "symbol": "STEEMUSDT",
-        "price": "0.25440000",
-        "timestamp": "2024-11-28 12:21:39"
+        "price": "0.25820000",
+        "timestamp": "2024-11-28 14:50:12"
     },
     {
         "symbol": "ZENUSDT",
-        "price": "15.11000000",
-        "timestamp": "2024-11-28 12:21:39"
+        "price": "15.06000000",
+        "timestamp": "2024-11-28 14:50:12"
     },
     {
         "symbol": "PEPEUSDT",
-        "price": "0.00001936",
-        "timestamp": "2024-11-28 12:21:39"
+        "price": "0.00001953",
+        "timestamp": "2024-11-28 14:50:13"
     },
     {
         "symbol": "TRXUSDT",
-        "price": "0.20250000",
-        "timestamp": "2024-11-28 12:21:39"
+        "price": "0.20280000",
+        "timestamp": "2024-11-28 14:50:13"
     },
     {
         "symbol": "XRPUSDT",
-        "price": "1.47120000",
-        "timestamp": "2024-11-28 12:21:40"
+        "price": "1.47770000",
+        "timestamp": "2024-11-28 14:50:13"
     },
     {
         "symbol": "THEUSDT",
-        "price": "3.16370000",
-        "timestamp": "2024-11-28 12:21:41"
+        "price": "3.35960000",
+        "timestamp": "2024-11-28 14:50:14"
     },
     {
         "symbol": "DOGEUSDT",
-        "price": "0.39762000",
-        "timestamp": "2024-11-28 12:21:41"
+        "price": "0.39913000",
+        "timestamp": "2024-11-28 14:50:14"
     },
     {
         "symbol": "BTCUSDT",
-        "price": "95089.96000000",
-        "timestamp": "2024-11-28 12:21:41"
+        "price": "95180.32000000",
+        "timestamp": "2024-11-28 14:50:14"
     },
     {
         "symbol": "ETHUSDT",
-        "price": "3555.29000000",
-        "timestamp": "2024-11-28 12:21:42"
+        "price": "3574.88000000",
+        "timestamp": "2024-11-28 14:50:15"
     },
     {
         "symbol": "MATICUSDT",
         "price": "0.37940000",
-        "timestamp": "2024-11-28 12:21:42"
+        "timestamp": "2024-11-28 14:50:15"
     },
     {
         "symbol": "LINKUSDT",
-        "price": "17.82000000",
-        "timestamp": "2024-11-28 12:21:42"
+        "price": "17.84000000",
+        "timestamp": "2024-11-28 14:50:15"
     },
     {
         "symbol": "SHIBUSDT",
-        "price": "0.00002522",
-        "timestamp": "2024-11-28 12:21:42"
+        "price": "0.00002531",
+        "timestamp": "2024-11-28 14:50:16"
     },
     {
         "symbol": "LTCUSDT",
-        "price": "95.09000000",
-        "timestamp": "2024-11-28 12:21:43"
+        "price": "95.29000000",
+        "timestamp": "2024-11-28 14:50:16"
     },
     {
         "symbol": "BCHUSDT",
-        "price": "503.90000000",
-        "timestamp": "2024-11-28 12:21:43"
+        "price": "508.80000000",
+        "timestamp": "2024-11-28 14:50:17"
     }
 ]

@@ -76,7 +76,7 @@ def fetch_and_save_data():
 
         # Esperar hasta el próximo ciclo de consulta (1 minuto)
         print(f"Esperando 1 minuto para la siguiente consulta...")
-        time.sleep(5)  # Esperar 5seg 
+        time.sleep(10)  # Esperar 5seg 
 
 if __name__ == "__main__":
     

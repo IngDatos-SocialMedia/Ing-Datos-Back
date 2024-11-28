@@ -23,7 +23,7 @@ from crypto_etl_project.src.loader.joinLoads_loader import load_and_combine_data
 
 # Carga de BD
 from crypto_etl_project.src.loader.coin_load import load_data_to_db_coinmarketcap2
-# Flag global para controlar la ejecución
+
 running = True
 file_path2 = "crypto_etl_project/data/coinmarketcap/coin_data_transformed.json"  # Archivo JSON con los datos transformados
 
