@@ -1,67 +1,67 @@
 [
     {
         "symbol": "ARUSDT",
-        "price": "20.76000000",
-        "timestamp": "2024-11-27 13:14:13"
+        "price": "21.07000000",
+        "timestamp": "2024-11-28 06:07:50"
     },
     {
         "symbol": "XTZUSDT",
-        "price": "1.27600000",
-        "timestamp": "2024-11-27 13:14:14"
+        "price": "1.24400000",
+        "timestamp": "2024-11-28 06:07:50"
     },
     {
         "symbol": "STRKUSDT",
-        "price": "0.61740000",
-        "timestamp": "2024-11-27 13:14:14"
+        "price": "0.62300000",
+        "timestamp": "2024-11-28 06:07:50"
     },
     {
         "symbol": "EOSUSDT",
-        "price": "0.81960000",
-        "timestamp": "2024-11-27 13:14:14"
+        "price": "0.79500000",
+        "timestamp": "2024-11-28 06:07:51"
     },
     {
         "symbol": "DASHUSDT",
-        "price": "37.54000000",
-        "timestamp": "2024-11-27 13:14:15"
+        "price": "35.78000000",
+        "timestamp": "2024-11-28 06:07:51"
     },
     {
         "symbol": "NEOUSDT",
-        "price": "14.52000000",
-        "timestamp": "2024-11-27 13:14:15"
+        "price": "14.55000000",
+        "timestamp": "2024-11-28 06:07:51"
     },
     {
         "symbol": "STEEMUSDT",
-        "price": "0.26080000",
-        "timestamp": "2024-11-27 13:14:16"
+        "price": "0.25490000",
+        "timestamp": "2024-11-28 06:07:51"
     },
     {
         "symbol": "ZENUSDT",
-        "price": "15.22000000",
-        "timestamp": "2024-11-27 13:14:16"
+        "price": "15.19000000",
+        "timestamp": "2024-11-28 06:07:52"
     },
     {
         "symbol": "PEPEUSDT",
-        "price": "0.00001953",
-        "timestamp": "2024-11-27 13:14:16"
+        "price": "0.00001961",
+        "timestamp": "2024-11-28 06:07:52"
     },
     {
         "symbol": "TRXUSDT",
-        "price": "0.20100000",
-        "timestamp": "2024-11-27 13:14:17"
+        "price": "0.20170000",
+        "timestamp": "2024-11-28 06:07:52"
     },
     {
         "symbol": "XRPUSDT",
-        "price": "1.48920000",
-        "timestamp": "2024-11-27 13:14:17"
+        "price": "1.45360000",
+        "timestamp": "2024-11-28 06:07:53"
     },
     {
         "symbol": "THEUSDT",
-        "price": "3.49640000",
-        "timestamp": "2024-11-27 13:14:17"
+        "price": "3.48510000",
+        "timestamp": "2024-11-28 06:07:53"
     },
     {
         "symbol": "DOGEUSDT",
-        "price": "0.40168000",
-        "timestamp": "2024-11-27 13:14:18"
+        "price": "0.39934000",
+        "timestamp": "2024-11-28 06:07:54"
     }
 ]

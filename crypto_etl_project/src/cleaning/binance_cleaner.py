@@ -6,6 +6,7 @@ from datetime import datetime
 from sklearn.preprocessing import StandardScaler
 from sklearn.impute import KNNImputer
 
+
 print("Iniciando transformación de datos de Binance...")
 
 # Función para cargar los datos existentes desde el archivo JSON
@@ -56,32 +57,38 @@ def save_to_json(data, file_path):
     
     print(f"Datos guardados correctamente en {file_path}")
 
+
 # Función para monitorear el archivo JSON y limpiar los nuevos datos
-def monitor_and_clean(file_path, new_file_path, interval=30):
-    print(f"Comenzando a monitorear el archivo de datos cada {interval} segundos...")
-    count = 0
-    while count < interval:
-        print(f"Esperando {interval} segundos antes de la próxima verificación... {count + 1}/{interval}")
+def monitor_and_clean(file_path, new_file_path, interval=1):
+    print(f"Comenzando a monitorear el archivo de datos...")
 
-        # Cargar los datos existentes
-        data = load_data(file_path)
+    # Obtener el tiempo de la última modificación del archivo
+    last_modified_time = os.path.getmtime(file_path)
 
-        # Si hay datos, limpiarlos y procesarlos
-        if not data.empty:
-            print("Datos encontrados, limpiando y procesando...")
-            cleaned_data = clean_data(data)
+    while True:
+        # Verificar si el archivo ha sido modificado
+        current_modified_time = os.path.getmtime(file_path)
 
-            # Guardar los datos limpiados en un archivo nuevo sin sobrescribir todo
-            save_to_json(cleaned_data.to_dict(orient='records'), new_file_path)
-            print(f"Datos limpiados y guardados en {new_file_path}")
+        if current_modified_time != last_modified_time:
+            print("¡Archivo modificado! Comenzando el proceso de limpieza...")
+
+            # Cargar los datos existentes
+            data = load_data(file_path)
+
+            # Si hay datos, limpiarlos y procesarlos
+            if not data.empty:
+                print("Datos encontrados, limpiando y procesando...")
+                cleaned_data = clean_data(data)
+
+                # Guardar los datos limpiados en un archivo nuevo sin sobrescribir todo
+                save_to_json(cleaned_data.to_dict(orient='records'), new_file_path)
+                print(f"Datos limpiados y guardados en {new_file_path}")
+
+            # Actualizar el tiempo de la última modificación
+            last_modified_time = current_modified_time
         
-        # Si no se encuentran nuevos datos, espera el próximo ciclo
-        else:
-            print("No se encontraron nuevos datos. Esperando 30 segundos...")
-
-        # Incrementar el contador
-        count += 1
-        time.sleep(interval)  # Espera 'interval' segundos antes de la siguiente verificación
+        # Esperar un poco antes de verificar nuevamente
+        time.sleep(interval)  # Espera 1 segundo antes de la siguiente verificación
 
 # Ejecución principal del proceso
 if __name__ == "__main__":
@@ -89,4 +96,4 @@ if __name__ == "__main__":
     new_file_path = "crypto_etl_project/data/binance/binance_data_new.json"  # Archivo donde se guardan los datos limpiados y procesados
 
     # Monitorear el archivo y limpiar los datos
-    monitor_and_clean(file_path, new_file_path, interval=30)
+    monitor_and_clean(file_path, new_file_path)
